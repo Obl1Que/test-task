@@ -1,9 +1,12 @@
 import os
 
+import numpy as np
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtGui import QPainter, QColor, QPen
 from coordinates import Coordinates
 from viewer import Viewer
+import cv2
 
 class Window(QtWidgets.QWidget):
 
@@ -29,9 +32,14 @@ class Window(QtWidgets.QWidget):
         self.btnOpen.setText('Choose directory')
         self.btnOpen.clicked.connect(self.openDirectory)
 
+        self.btnSetDelta = QtWidgets.QToolButton(self)
+        self.btnSetDelta.setText('Set delta time')
+        self.btnSetDelta.clicked.connect(self.setDeltaTime)
+
         self.btnSwhMode = QtWidgets.QToolButton(self)
         self.btnSwhMode.setText('Switch mode')
         self.btnSwhMode.clicked.connect(self.view_1.switchMode)
+        self.btnSwhMode.clicked.connect(self.view_2.switchMode)
 
         self.btnReset = QtWidgets.QToolButton(self)
         self.btnReset.setText('Reset')
@@ -44,6 +52,7 @@ class Window(QtWidgets.QWidget):
         self.now = QtWidgets.QLabel(self)
         self.last = QtWidgets.QLabel(self)
         self.cnt = QtWidgets.QLabel(self)
+        self.delta_time_label = QtWidgets.QLabel(self)
 
         self.view_1.mousePressed.connect(self.addCoord)
         self.view_1.mouseMoved.connect(self.showNow)
@@ -81,6 +90,7 @@ class Window(QtWidgets.QWidget):
         btnsLayout = QtWidgets.QHBoxLayout()
         btnsLayout.setAlignment(QtCore.Qt.AlignLeft)
         btnsLayout.addWidget(self.btnOpen)
+        btnsLayout.addWidget(self.btnSetDelta)
         btnsLayout.addWidget(self.btnSwhMode)
         btnsLayout.addWidget(self.btnReset)
         btnsLayout.addWidget(self.btnSave)
@@ -90,6 +100,7 @@ class Window(QtWidgets.QWidget):
         lblsLayout.addWidget(self.now)
         lblsLayout.addWidget(self.last)
         lblsLayout.addWidget(self.cnt)
+        lblsLayout.addWidget(self.delta_time_label)
 
         lnntns1Layout = QtWidgets.QHBoxLayout()
         lnntns1Layout.setAlignment(QtCore.Qt.AlignCenter)
@@ -126,6 +137,7 @@ class Window(QtWidgets.QWidget):
         self.now.setText('Now: -, -')
         self.last.setText('Last: -, -')
         self.cnt.setText('Cnt: 0')
+        self.delta_time_label.setText('Delta time: -')
 
     def save(self):
         self.coords.save()
