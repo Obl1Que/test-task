@@ -183,7 +183,8 @@ class Window(QtWidgets.QWidget):
 
                 try:
                     self.imgpath_1 = os.path.join(self.curpath_1, os.listdir(self.curpath_1)[self.imgc_1])
-                    self.view_1.setImage(QtGui.QPixmap(self.imgpath_1))
+                    self.img_1 = QtGui.QPixmap(self.imgpath_1)
+                    self.view_1.setImage(self.img_1)
                 except:
                     self.imgc_1 -= 1
             elif sender == self.btnNext_2:
@@ -191,7 +192,8 @@ class Window(QtWidgets.QWidget):
 
                 try:
                     self.imgpath_2 = os.path.join(self.curpath_2, os.listdir(self.curpath_2)[self.imgc_2])
-                    self.view_2.setImage(QtGui.QPixmap(self.imgpath_2))
+                    self.img_2 = QtGui.QPixmap(self.imgpath_2)
+                    self.view_2.setImage(self.img_2)
                 except:
                     self.imgc_2 -= 1
             elif sender == self.btnLast_1:
@@ -200,7 +202,8 @@ class Window(QtWidgets.QWidget):
 
                 try:
                     self.imgpath_1 = os.path.join(self.curpath_1, os.listdir(self.curpath_1)[self.imgc_1])
-                    self.view_1.setImage(QtGui.QPixmap(self.imgpath_1))
+                    self.img_1 = QtGui.QPixmap(self.imgpath_1)
+                    self.view_1.setImage(self.img_1)
                 except:
                     self.imgc_1 += 1
 
@@ -210,9 +213,11 @@ class Window(QtWidgets.QWidget):
 
                 try:
                     self.imgpath_2 = os.path.join(self.curpath_2, os.listdir(self.curpath_2)[self.imgc_2])
-                    self.view_2.setImage(QtGui.QPixmap(self.imgpath_2))
+                    self.img_2 = QtGui.QPixmap(self.imgpath_2)
+                    self.view_2.setImage(QtGui.QPixmap(self.img_2))
                 except:
                     self.imgc_2 += 1
-
+            self.view_1.setSwitchMode()
+            self.view_2.setSwitchMode()
             self.curImgC1Label.setText(f"Image counter: {self.imgc_1}")
             self.curImgC2Label.setText(f"Image counter: {self.imgc_2}")
