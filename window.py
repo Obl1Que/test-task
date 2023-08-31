@@ -18,6 +18,10 @@ class Window(QtWidgets.QWidget):
         self.imgc_2 = 0
         self.imgpath_1 = ""
         self.imgpath_2 = ""
+        self.img_1 = None
+        self.img_2 = None
+        self.img_1_dots = {}
+        self.img_2_dots = {}
 
         self.view_1 = Viewer(self)
         self.view_2 = Viewer(self)
@@ -144,10 +148,13 @@ class Window(QtWidgets.QWidget):
         self.reset()
 
     def addCoord(self, pos):
+        sender = self.sender()
+
         if self.view_1.dragMode() == QtWidgets.QGraphicsView.NoDrag or self.view_2.dragMode() == QtWidgets.QGraphicsView.NoDrag:
             x = pos.x() * 100 // 10 / 10
             y = pos.y() * 100 // 10 / 10
             self.coords.add(x, y)
+            self.addPoint(int(x), int(y), sender)
             self.last.setText('Last: %.1f, %.1f' % (x, y))
             self.cnt.setText('Cnt: %d' % (self.coords.getSize()))
 
