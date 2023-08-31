@@ -58,6 +58,10 @@ class Viewer(QtWidgets.QGraphicsView):
         elif not self._empty:
             self.setDragMode(QtWidgets.QGraphicsView.ScrollHandDrag)
 
+    def setSwitchMode(self):
+        """Setting default hand-scroll mode."""
+        self.setDragMode(QtWidgets.QGraphicsView.ScrollHandDrag)
+
     def wheelEvent(self, event):
         if not self._empty:
             if event.angleDelta().y() > 0:
