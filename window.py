@@ -29,7 +29,6 @@ class Window(QtWidgets.QWidget):
 
 
     def initUI(self):
-
         self.setGeometry(300, 300, 1280, 1024)
 
         self.btnOpen = QtWidgets.QToolButton(self)
@@ -168,11 +167,17 @@ class Window(QtWidgets.QWidget):
         self.curpath_2 = os.path.join(dirname, os.listdir(dirname)[1])
 
     def setFirstImg(self):
+        self.imgc_1 = 0
+        self.imgc_2 = 0
+
         self.imgpath_1 = os.path.join(self.curpath_1, os.listdir(self.curpath_1)[self.imgc_1])
         self.imgpath_2 = os.path.join(self.curpath_2, os.listdir(self.curpath_2)[self.imgc_2])
 
-        self.view_1.setImage(QtGui.QPixmap(self.imgpath_1))
-        self.view_2.setImage(QtGui.QPixmap(self.imgpath_2))
+        self.img_1 = QtGui.QPixmap(self.imgpath_1)
+        self.img_2 = QtGui.QPixmap(self.imgpath_2)
+
+        self.view_1.setImage(self.img_1)
+        self.view_2.setImage(self.img_2)
 
     def goImg(self):
         sender = self.sender()
