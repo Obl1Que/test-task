@@ -45,6 +45,13 @@ class Viewer(QtWidgets.QGraphicsView):
             self._photo.setPixmap(QtGui.QPixmap())
         self.fitInView()
 
+    def updateImage(self, pixmap=None):
+        if pixmap and not pixmap.isNull():
+            self._empty = False
+            self._photo.setPixmap(pixmap)
+    def getImage(self):
+        return self._photo
+
     def switchMode(self):
         if self.dragMode() == QtWidgets.QGraphicsView.ScrollHandDrag:
             self.setDragMode(QtWidgets.QGraphicsView.NoDrag)
