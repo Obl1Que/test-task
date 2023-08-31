@@ -226,3 +226,39 @@ class Window(QtWidgets.QWidget):
             self.view_2.setSwitchMode()
             self.curImgC1Label.setText(f"Image counter: {self.imgc_1}")
             self.curImgC2Label.setText(f"Image counter: {self.imgc_2}")
+        
+    def setDeltaTime(self):
+        self.delta_time = self.imgc_1 - self.imgc_2
+        self.delta_time_label.setText(f'Delta time: {self.delta_time}')
+
+    def addPoint(self, x: int, y: int, sender):
+        try:
+            if sender == self.view_1:
+                paint = self.img_1
+                img_filename = os.listdir(self.curpath_1)[self.imgc_1]
+
+                if img_filename not in self.img_1_dots:
+                    self.img_1_dots[img_filename] = []
+
+                self.img_1_dots[img_filename].append((x, y))
+            else:
+                paint = self.img_2
+                img_filename = os.listdir(self.curpath_2)[self.imgc_2]
+
+                if img_filename not in self.img_2_dots:
+                    self.img_2_dots[img_filename] = []
+
+                self.img_2_dots[img_filename].append((x, y))
+
+            painter = QPainter(paint)
+            pen = QPen(QColor(255, 0, 0))
+            painter.setPen(pen)
+
+            painter.drawEllipse(x - 2, y - 2, 4, 4)
+            painter.end()
+            sender.updateImage(paint)
+
+            print(self.img_1_dots)
+            print(self.img_2_dots)
+        except Exception as ex:
+            print(ex)
